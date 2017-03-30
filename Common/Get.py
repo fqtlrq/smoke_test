@@ -24,7 +24,7 @@ def cookies():
     index = random.randint(0, 99)
     post_data = {'userName': name_list[index], 'userPwd': '1111111q', 'ip': '123', 'appVersion': '2.2.1',
                  'devType': '123', 'devInfo': '123', 'devSign': '132'}
-    res = Http.get_header_response('ehomepay-passport/app/testlogin', post_data)
+    res = Http.get_header_response('http://10.12.9.27/ehomepay-passport/app/testlogin', post_data)
     for k, v in res:
         if k == 'Set-Cookie':
             return v

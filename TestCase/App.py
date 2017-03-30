@@ -1,24 +1,25 @@
 import unittest
-import time
 from Core.Http import Http
 from Core.DB import DB
 from Common import Compare, Get
 
 
-class EHomePayPassport(unittest.TestCase):
+class Api(unittest.TestCase):
     def setUp(self):
         self.db = DB()
-        self.host = 'http://10.12.9.27'
-        self.header = {}
+        cookie = Get.cookies()
+        self.header = {'Cookie': cookie}
 
-    def testLogin(self):
-        data = self.db.query_one("select * from api where api_path='/app/testlogin'")
-        result = Http.get_json_response(self.host + '/' + data['project'] + data['api_path'], eval(data['params']),
-                                        self.header)
-        record = dict()
-        record['project'] = data['project']
-        record['api_path'] = data['api_path']
-        record['api_type'] = data['api_type']
-        record['result'] = Compare.expect_to_actual(data['expect'], 'code:' + result['code'])
-        self.db.insert(record, 'result')
-        self.assertEqual(data['expect'], 'code:' + result['code'], data['api_path'])
+    def testAppNative(self):
+        host = 'http://10.12.9.27'
+        data = self.db.query_all("select * from api where project='app-native-http2.2'")
+        for item in data:
+            url = host + '/' + item['project'] + item['api_path']
+            result = Http.get_json_response(url, eval(item['params']), self.header)
+            record = dict()
+            record['project'] = item['project']
+            record['api_path'] = item['api_path']
+            record['api_type'] = item['api_type']
+            record['result'] = Compare.expect_to_actual(item['expect'], 'code:' + result['code'])
+            self.db.insert(record, 'result')
+            self.assertEqual(item['expect'], 'code:' + result['code'], item['api_path'])

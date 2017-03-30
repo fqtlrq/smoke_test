@@ -2,12 +2,12 @@ import unittest
 import time
 import os
 import sys
-from TestCase.App import EHomePayPassport
+from TestCase.App import Api
 from Core.HTMLTestRunner import HTMLTestRunner
 from Plugins import Mail, Jenkins
 
 job_name = sys.argv[1]
-# job_name = 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080'
+job_name = 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080'
 x, y, z = Jenkins.get_job_info(job_name)
 jenkins_ls = [('Job Name', job_name),
               ('Version', x),
@@ -15,7 +15,7 @@ jenkins_ls = [('Job Name', job_name),
               ('Build Finish Time', z)]
 
 test_suite = unittest.TestSuite()
-test_suite.addTests([EHomePayPassport('testLogin')])
+test_suite.addTests([Api('testAppNative')])
 
 timeStampArr = time.localtime(time.time())
 folder = './html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
