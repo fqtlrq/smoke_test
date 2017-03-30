@@ -12,11 +12,11 @@ class EHomePayPassport(unittest.TestCase):
         self.header = {}
 
     def testLogin(self):
-        data = self.db.query_one("select * from smoke where api_path='/app/testlogin'")
+        data = self.db.query_one("select * from api where api_path='/app/testlogin'")
         result = Http.get_json_response(self.host + '/' + data['project'] + data['api_path'], eval(data['params']),
                                         self.header)
         record = dict()
-        record['project']=data['project']
+        record['project'] = data['project']
         record['api_path'] = data['api_path']
         record['api_type'] = data['api_type']
         record['result'] = Compare.expect_to_actual(data['expect'], 'code:' + result['code'])

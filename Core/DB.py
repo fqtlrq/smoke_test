@@ -19,19 +19,20 @@ class DB:
         self.cur.execute(sql)
         return self.cur.fetchall()
 
-    def query_one(self,sql):
+    def query_one(self, sql):
         self.cur.execute(sql)
         return self.cur.fetchone()
 
-    def insert(self, data,table):
+    def insert(self, data, table):
         column = ''
         value = ''
         for k, v in data.items():
             column += k + ','
-            value += '\'' + v + '\','
+            value += '\'' + v.replace('\'', '\'\'') + '\','
         column = column.rstrip(',')
         value = value.rstrip(',')
 
-        sql = 'insert into '+table+' (' + column + ') values (' + value + ')'
+        sql = 'insert into ' + table + ' (' + column + ') values (' + value + ')'
         self.cur.execute(sql)
         self.conn.commit()
+        return self.cur.lastrowid
