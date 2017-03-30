@@ -6,8 +6,8 @@ from TestCase.App import EHomePayPassport
 from Core.HTMLTestRunner import HTMLTestRunner
 from Plugins import Mail, Jenkins
 
-# job_name = sys.argv[1]
-job_name = 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080'
+job_name = sys.argv[1]
+# job_name = 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080'
 x, y, z = Jenkins.get_job_info(job_name)
 jenkins_ls = [('Job Name', job_name),
               ('Version', x),
