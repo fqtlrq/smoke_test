@@ -28,3 +28,8 @@ def cookies():
     for k, v in res:
         if k == 'Set-Cookie':
             return v
+
+
+def ck_key_value():
+    res = Http.get_json_response('http://10.12.9.12:8083/ehomepay_usercenter/commons/getCK', '', {})
+    return res['data']['ckKey'], res['data']['ckValue']

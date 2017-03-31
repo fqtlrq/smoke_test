@@ -4,13 +4,13 @@ from Core.DB import DB
 from Common import Compare, Get
 
 
-class AppNative(unittest.TestCase):
+class Api(unittest.TestCase):
     def setUp(self):
         self.db = DB()
         cookie = Get.cookies()
         self.header = {'Cookie': cookie}
 
-    def testRun(self):
+    def testAppNative(self):
         host = 'http://10.12.9.27'
         data = self.db.query_all("select * from api where project='app-native-http2.2'")
         for item in data:
