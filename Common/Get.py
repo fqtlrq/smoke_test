@@ -33,3 +33,11 @@ def cookies():
 def ck_key_value():
     res = Http.get_json_response('http://10.12.9.12:8083/ehomepay_usercenter/commons/getCK', '', {})
     return res['data']['ckKey'], res['data']['ckValue']
+
+
+def get_random(length):
+    seed = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
+    value = ''
+    for i in range(length):
+        value += random.choice(seed)
+    return value
