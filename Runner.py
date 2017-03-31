@@ -18,7 +18,7 @@ test_suite = unittest.TestSuite()
 test_suite.addTests([Api('testAppNative')])
 
 timeStampArr = time.localtime(time.time())
-folder = './html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
+folder = './Html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
 os.makedirs(folder, exist_ok=True)
 file = folder + time.strftime('%H-%M-%S') + '.html'
 
