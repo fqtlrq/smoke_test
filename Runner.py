@@ -2,7 +2,7 @@ import unittest
 import time
 import os
 import sys
-from TestCase.App import Api
+from TestCase.App import AppNative
 from Core.HTMLTestRunner import HTMLTestRunner
 from Plugins import Mail, Jenkins
 
@@ -15,7 +15,7 @@ jenkins_ls = [('Job Name', job_name),
               ('Build Finish Time', z)]
 
 test_suite = unittest.TestSuite()
-test_suite.addTests([Api('testAppNative')])
+test_suite.addTests([AppNative('testRun')])
 
 timeStampArr = time.localtime(time.time())
 folder = './Html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
