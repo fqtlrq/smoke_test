@@ -1,11 +1,12 @@
 import jenkins
 import time
 import os
+from Common import Get
 from configparser import ConfigParser
 
 
 def get_job_info(job_name):
-    jenkins_conf_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'Conf', 'Jenkins.ini')
+    jenkins_conf_path = os.path.join(Get.base_dir(), 'Conf', 'Jenkins.ini')
     cf = ConfigParser()
     cf.read(jenkins_conf_path, 'utf-8')
     server = jenkins.Jenkins(cf.get('base', 'host'), username=cf.get('base', 'username'),

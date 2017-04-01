@@ -1,11 +1,12 @@
 import pymysql
 import os
+from Common import Get
 from configparser import ConfigParser
 
 
 class DB:
     def __init__(self):
-        db_conf_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'Conf', 'DB.ini')
+        db_conf_path = os.path.join(Get.base_dir(), 'Conf', 'DB.ini')
         cf = ConfigParser()
         cf.read(db_conf_path, 'utf-8')
         server = cf.get('mysql', 'server')

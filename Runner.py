@@ -2,6 +2,7 @@ import unittest
 import time
 import os
 import sys
+from Common import Get
 from TestCase.App import Api
 from Core.HTMLTestRunner import HTMLTestRunner
 from Plugins import Mail, Jenkins
@@ -18,7 +19,8 @@ test_suite = unittest.TestSuite()
 test_suite.addTests([Api('testAppNative')])
 
 timeStampArr = time.localtime(time.time())
-folder = './Html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
+
+folder = Get.base_dir()+'/Html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
 os.makedirs(folder, exist_ok=True)
 file = folder + time.strftime('%H-%M-%S') + '.html'
 

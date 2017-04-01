@@ -1,4 +1,5 @@
 import random
+import os
 from Core.Http import Http
 
 
@@ -35,9 +36,13 @@ def ck_key_value():
     return res['data']['ckKey'], res['data']['ckValue']
 
 
-def get_random(length):
+def random_value(length):
     seed = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
     value = ''
     for i in range(length):
         value += random.choice(seed)
     return value
+
+
+def base_dir():
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

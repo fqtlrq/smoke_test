@@ -1,11 +1,12 @@
 import smtplib
 import os
+from Common import Get
 from configparser import ConfigParser
 from email.mime.text import MIMEText
 
 
 def send_mail(sub, content):
-    mail_conf_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'Conf', 'Email.ini')
+    mail_conf_path = os.path.join(Get.base_dir(), 'Conf', 'Email.ini')
     cf = ConfigParser()
     cf.read(mail_conf_path, 'utf-8')
     mail_to = cf.items('send')
