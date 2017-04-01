@@ -1,12 +1,2 @@
 \.idea/
-html/
-将删除 test.py
-将删除 Common/__pycache__/Compare.cpython-35.pyc
-将删除 Common/__pycache__/Get.cpython-35.pyc
-将删除 Core/__pycache__/DB.cpython-35.pyc
-将删除 Core/__pycache__/HTMLTestRunner.cpython-35.pyc
-将删除 Core/__pycache__/Http.cpython-35.pyc
-将删除 Html/
-将删除 Plugins/__pycache__/Jenkins.cpython-35.pyc
-将删除 Plugins/__pycache__/Mail.cpython-35.pyc
-将删除 TestCase/__pycache__/App.cpython-35.pyc
+Html/
