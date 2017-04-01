@@ -1,6 +1,0 @@
-__pycache__
-.git
-.idea
-Html
-sync_smoke_test.sh
-exclude.txt

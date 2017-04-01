@@ -10,5 +10,3 @@ html/
 将删除 Plugins/__pycache__/Jenkins.cpython-35.pyc
 将删除 Plugins/__pycache__/Mail.cpython-35.pyc
 将删除 TestCase/__pycache__/App.cpython-35.pyc
-/exclude.txt
-/sync_smoke_test.sh
