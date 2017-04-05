@@ -1,22 +1,25 @@
-import jenkins
-import time
 import os
-from Common import Get
+import time
 from configparser import ConfigParser
 
+import jenkins
 
-def get_job_info(job_name):
+from Common import Get
+
+
+def get_jenkins_obj():
     jenkins_conf_path = os.path.join(Get.base_dir(), 'Conf', 'Jenkins.ini')
     cf = ConfigParser()
     cf.read(jenkins_conf_path, 'utf-8')
-    server = jenkins.Jenkins(cf.get('base', 'host'), username=cf.get('base', 'username'),
-                             password=cf.get('base', 'password'))
+    return jenkins.Jenkins(cf.get('base', 'host'), username=cf.get('base', 'username'),
+                           password=cf.get('base', 'password'))
+
+
+def get_job_info(job_name):
+    server = get_jenkins_obj()
     # user = server.get_whoami()
     # version = server.get_version()
     # print('Hello %s from Jenkins %s' % (user['fullName'], version))
-
-    # jobs=server.get_jobs()
-    # print(jobs)
 
     last_build_number = \
         server.get_job_info(job_name)['lastCompletedBuild'][
@@ -42,3 +45,8 @@ def get_job_info(job_name):
     starter = starter.rstrip(' ')
     date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(build_info['timestamp'] / 1000))
     return version, starter, date
+
+
+def get_jobs_info():
+    server = get_jenkins_obj()
+    return server.get_all_jobs()
