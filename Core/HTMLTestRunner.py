@@ -92,7 +92,6 @@ Version in 0.7.1
 import datetime
 import io
 import sys
-import time
 import unittest
 from xml.sax import saxutils
 
@@ -619,7 +618,7 @@ class HTMLTestRunner(Template_mixin):
         self.stopTime = datetime.datetime.now()
         self.generateReport(test, result, jenkins_info)
         # print >> sys.stderr, '\nTime Elapsed: %s' % (self.stopTime-self.startTime)
-        print(sys.stderr, '\nTime Elapsed: %s' % (self.stopTime - self.startTime))
+        print('Time Elapsed: %s' % (self.stopTime - self.startTime))
         return result
 
     def sortResult(self, result_list):
