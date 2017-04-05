@@ -40,5 +40,5 @@ with open(file, 'w', encoding='utf-8') as f:
 print('Generate report successfully...')
 with open(file, 'r') as f:
     content = f.read()
-if Mail.send_mail('Automation Script Report', content):
+if Mail.send_mail('Automation Script Report', content, y):
     print('E-mail is sent to builder...')
