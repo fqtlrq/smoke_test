@@ -17,7 +17,11 @@ if job_name not in job_name_list:
     print('Please input correct job name!!!')
     exit()
 
+print('\n')
 print('==============================================================================')
+print('Automation Test Script')
+print('==============================================================================')
+
 x, y, z = Jenkins.get_job_info(job_name)
 jenkins_ls = [('Job Name', job_name),
               ('Version', x),
