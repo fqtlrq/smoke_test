@@ -6,7 +6,7 @@ import unittest
 from Common import Get
 from Core.HTMLTestRunner import HTMLTestRunner
 from Plugins import Mail, Jenkins
-from TestCase.App import Api
+from TestCase.Web import UserCenter
 
 # job_name = 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080'
 job_name = sys.argv[1]
@@ -30,8 +30,8 @@ jenkins_ls = [('Job Name', job_name),
 print('Get jenkins info successfully...')
 
 test_suite = unittest.TestSuite()
-test_suite.addTests([Api('testAppNative')])
-print('Finish to run test case...')
+test_suite.addTests([UserCenter('saveUserInfo')])
+
 
 timeStampArr = time.localtime(time.time())
 
@@ -41,8 +41,9 @@ file = folder + time.strftime('%H-%M-%S') + '.html'
 
 with open(file, 'w', encoding='utf-8') as f:
     HTMLTestRunner(stream=f, title='Automation Script Report', description=u'').run(test_suite, jenkins_ls)
+print('Finish to run test case...')
 print('Generate report successfully...')
 with open(file, 'r') as f:
     content = f.read()
 if Mail.send_mail('Automation Script Report', content, y):
-    print('E-mail is sent to builder...')
+    print('Email is sent to builder...')

@@ -29,7 +29,7 @@ class DB:
         value = ''
         for k, v in data.items():
             column += k + ','
-            value += '\'' + v.replace('\'', '\'\'') + '\','
+            value += '\'' + str(v).replace('\'', '\'\'') + '\','
         column = column.rstrip(',')
         value = value.rstrip(',')
 

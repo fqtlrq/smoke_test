@@ -46,3 +46,19 @@ def random_value(length):
 
 def base_dir():
     return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def test_steps(host, header, api_info, post_data):
+    record = dict()
+    url = host + '/' + api_info['project'] + api_info['api_path']
+    is_raw = bool()
+    if api_info['api_type'] == 'web1':
+        is_raw = True
+    if api_info['api_type'] == 'web2':
+        is_raw = False
+    result = Http.get_json_response(url, post_data, header, is_raw)
+    record['project'] = api_info['project']
+    record['api_path'] = api_info['api_path']
+    record['api_type'] = api_info['api_type']
+    record['result'] = api_info['expect'] == 'code:' + str(result['code']) and 'Pass' or 'Fail'
+    return record, result

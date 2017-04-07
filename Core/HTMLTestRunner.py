@@ -194,7 +194,6 @@ class Template_mixin(object):
 <body>
 <script language="javascript" type="text/javascript"><!--
 output_list = Array();
-
 /* level - 0:Summary; 1:Failed; 2:All */
 function showCase(level) {
     trs = document.getElementsByTagName("tr");
@@ -424,7 +423,7 @@ a.popup_link:hover {
 <col align='right' />
 </colgroup>
 <tr id='header_row'>
-    <td>Test Group</td>
+    <td>Test Group/Test Case</td>
     <td>Count</td>
     <td>Pass</td>
     <td>Fail</td>
@@ -461,8 +460,8 @@ a.popup_link:hover {
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
-    <!--<a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
-        %(status)s</a>-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
+        %(status)s</a>
 
     <div id='div_%(tid)s' class="popup_window" style="display:block">
         <div style='text-align: right; color:red;cursor:pointer'>
@@ -770,7 +769,8 @@ class HTMLTestRunner(Template_mixin):
 
         row = tmpl % dict(
             tid=tid,
-            Class=(n == 0 and 'hiddenRow' or 'none'),
+            # Class=(n == 0 and 'hiddenRow' or 'none'),
+            Class='none',
             style=n == 2 and 'errorCase' or (n == 1 and 'failCase' or 'none'),
             desc=desc,
             script=script,
