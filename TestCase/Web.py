@@ -1,6 +1,7 @@
 import unittest
-from Core.DB import DB
+
 from Common import Get
+from Core.DB import DB
 
 
 class UserCenter(unittest.TestCase):
@@ -9,148 +10,77 @@ class UserCenter(unittest.TestCase):
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
-    def saveUserInfo(self):
-        item = self.db.query_one("select * from api where id=20")
-        post_data = eval(item['params'])
-        post_data['loginName'] = Get.random_value(11)
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_saveUserInfo(self):
+        self.run_test(20, 'phone')
 
-    def checkPhone(self):
-        item = self.db.query_one("select * from api where id=21")
-        post_data = eval(item['params'])
-        post_data['phone'] = Get.random_value(20)
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_checkPhone(self):
+        self.run_test(21, 'phone')
 
-    def checkLogin(self):
-        item = self.db.query_one("select * from api where id=22")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_checkLogin(self):
+        self.run_test(22)
 
-    def queryRealAuthInfo(self):
-        item = self.db.query_one("select * from api where id=23")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_queryRealAuthInfo(self):
+        self.run_test(23)
 
-    def checkCertVaild(self):
-        item = self.db.query_one("select * from api where id=24")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_checkCertVaild(self):
+        self.run_test(24)
 
-    def getVocationList(self):
-        item = self.db.query_one("select * from api where id=25")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_getVocationList(self):
+        self.run_test(25)
 
-    def getCK(self):
-        item = self.db.query_one("select * from api where id=26")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_getCK(self):
+        self.run_test(26)
 
-    def queryUserInfoByLogin(self):
-        item = self.db.query_one("select * from api where id=27")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_queryUserInfoByLogin(self):
+        self.run_test(27)
 
-    def editUserInfo(self):
-        item = self.db.query_one("select * from api where id=28")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_editUserInfo(self):
+        self.run_test(28)
 
-    def updatePhone(self):
-        item = self.db.query_one("select * from api where id=29")
-        post_data = eval(item['params'])
-        post_data['phone'] = Get.random_value(11)
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_updatePhone(self):
+        self.run_test(29, 'phone')
 
-    def updateHeadPic(self):
-        item = self.db.query_one("select * from api where id=30")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_updateHeadPic(self):
+        self.run_test(30)
 
-    def updateSignature(self):
-        item = self.db.query_one("select * from api where id=31")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_updateSignature(self):
+        self.run_test(31)
 
-    def updateEmail(self):
-        item = self.db.query_one("select * from api where id=32")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_updateEmail(self):
+        self.run_test(32)
 
-    def queryUserInfo(self):
-        item = self.db.query_one("select * from api where id=33")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_queryUserInfo(self):
+        self.run_test(33)
 
-    def getQuestions(self):
-        item = self.db.query_one("select * from api where id=34")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_getQuestions(self):
+        self.run_test(34)
 
-    def queryQuestionById(self):
-        item = self.db.query_one("select * from api where id=35")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_queryQuestionById(self):
+        self.run_test(35)
 
-    def setPhone(self):
-        item = self.db.query_one("select * from api where id=36")
-        post_data = eval(item['params'])
-        post_data['phone'] = Get.random_value(11)
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_setPhone(self):
+        self.run_test(36, 'phone')
 
-    def setEmail(self):
-        item = self.db.query_one("select * from api where id=37")
-        post_data = eval(item['params'])
-        post_data['email'] = Get.random_value(11) + '@ehomepay.com.cn'
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_setEmail(self):
+        self.run_test(37, 'email')
 
-    def queryCancelUserList(self):
-        item = self.db.query_one("select * from api where id=38")
-        post_data = eval(item['params'])
-        post_data['email'] = Get.random_value(11) + '@ehomepay.com.cn'
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+    def test_queryCancelUserList(self):
+        self.run_test(38, 'email')
 
-    def queryEmailOrPhoneExist(self):
-        item = self.db.query_one("select * from api where id=39")
+    def test_queryEmailOrPhoneExist(self):
+        self.run_test(39)
+
+    def run_test(self, case_id, random_type=''):
+        item = self.db.query_one("select * from api where id=" + case_id)
         post_data = eval(item['params'])
+
+        if random_type == '':
+            pass
+        elif random_type == 'email':
+            post_data['email'] = Get.random_value(11) + '@ehomepay.com.cn'
+        elif random_type == 'phone':
+            post_data['phone'] = Get.random_value(11)
+
         record, result = Get.test_steps(self.host, self.header, item, post_data)
         self.db.insert(record, 'result')
         self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])

@@ -1,16 +1,17 @@
 import unittest
-from Core.Http import Http
-from Core.DB import DB
+
 from Common import Get
+from Core.DB import DB
+from Core.Http import Http
 
 
-class Api(unittest.TestCase):
+class AppNative(unittest.TestCase):
     def setUp(self):
         self.db = DB()
         cookie = Get.cookies()
         self.header = {'Cookie': cookie}
 
-    def getRealAuthInfo(self):
+    def test_native_all(self):
         host = 'http://10.12.9.27'
         data = self.db.query_all(
             "select * from api where project='app-native-http2.2' and api_path='/newRealAuth/getRealAuthInfo'")
@@ -25,5 +26,5 @@ class Api(unittest.TestCase):
             self.db.insert(record, 'result')
             self.assertEqual(item['expect'], 'code:' + result['code'], item['api_path'])
 
-    def testAppForTest(self):
-        self.assertEqual(1, 2)
+    def test_error_info(self):
+        self.assertEqual(1, 2, '/newRealAuth/getRealAuthInfo')

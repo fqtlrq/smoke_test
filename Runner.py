@@ -6,6 +6,7 @@ import unittest
 from Common import Get
 from Core.HTMLTestRunner import HTMLTestRunner
 from Plugins import Mail, Jenkins
+from TestCase.App import AppNative
 from TestCase.Web import UserCenter
 
 # job_name = 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080'
@@ -29,18 +30,19 @@ jenkins_ls = [('Job Name', job_name),
               ('Build Finish Time', z)]
 print('Get jenkins info successfully...')
 
-test_suite = unittest.TestSuite()
-test_suite.addTests([UserCenter('saveUserInfo')])
-
+# test_suite = unittest.TestSuite()
+# test_suite.addTests([UserCenter('saveUserInfo')])
+user_center = unittest.TestLoader().loadTestsFromTestCase(UserCenter)
+app_native = unittest.TestLoader().loadTestsFromTestCase(AppNative)
+total_test_suite = unittest.TestSuite([user_center, app_native])
 
 timeStampArr = time.localtime(time.time())
-
 folder = Get.base_dir() + '/Html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
 os.makedirs(folder, exist_ok=True)
 file = folder + time.strftime('%H-%M-%S') + '.html'
 
 with open(file, 'w', encoding='utf-8') as f:
-    HTMLTestRunner(stream=f, title='Automation Script Report', description=u'').run(test_suite, jenkins_ls)
+    HTMLTestRunner(stream=f, title='Automation Script Report', description=u'').run(total_test_suite, jenkins_ls)
 print('Finish to run test case...')
 print('Generate report successfully...')
 with open(file, 'r') as f:
