@@ -34,7 +34,7 @@ print('Get jenkins info successfully...')
 # test_suite.addTests([UserCenter('saveUserInfo')])
 user_center = unittest.TestLoader().loadTestsFromTestCase(UserCenter)
 app_native = unittest.TestLoader().loadTestsFromTestCase(AppNative)
-total_test_suite = unittest.TestSuite([user_center, app_native])
+total_test = unittest.TestSuite([user_center, app_native])
 
 timeStampArr = time.localtime(time.time())
 folder = Get.base_dir() + '/Html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
@@ -42,10 +42,10 @@ os.makedirs(folder, exist_ok=True)
 file = folder + time.strftime('%H-%M-%S') + '.html'
 
 with open(file, 'w', encoding='utf-8') as f:
-    HTMLTestRunner(stream=f, title='Automation Script Report', description=u'').run(total_test_suite, jenkins_ls)
+    HTMLTestRunner(stream=f, title='Automation Script Report', description=u'').run(total_test, jenkins_ls)
 print('Finish to run test case...')
 print('Generate report successfully...')
 with open(file, 'r') as f:
     content = f.read()
-if Mail.send_mail('Automation Script Report', content, y):
+if Mail.send_mail('Automation Script Report', content):
     print('Email is sent to builder...')
