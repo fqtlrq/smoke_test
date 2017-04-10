@@ -11,7 +11,7 @@ class UserCenter(unittest.TestCase):
         self.db = DB()
 
     def test_saveUserInfo(self):
-        self.run_test(20, 'phone')
+        self.run_test(20, 'loginName')
 
     def test_checkPhone(self):
         self.run_test(21, 'phone')
@@ -70,8 +70,14 @@ class UserCenter(unittest.TestCase):
     def test_queryEmailOrPhoneExist(self):
         self.run_test(39)
 
+    def test_countRealAuthNum(self):
+        self.run_test(40)
+
+    def test_countRegisterNum(self):
+        self.run_test(41)
+
     def run_test(self, case_id, random_type=''):
-        item = self.db.query_one("select * from api where id=" + case_id)
+        item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
 
         if random_type == '':
@@ -80,6 +86,8 @@ class UserCenter(unittest.TestCase):
             post_data['email'] = Get.random_value(11) + '@ehomepay.com.cn'
         elif random_type == 'phone':
             post_data['phone'] = Get.random_value(11)
+        elif random_type == 'loginName':
+            post_data['loginName'] = Get.random_value(11)
 
         record, result = Get.test_steps(self.host, self.header, item, post_data)
         self.db.insert(record, 'result')

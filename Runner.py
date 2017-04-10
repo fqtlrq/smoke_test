@@ -6,7 +6,6 @@ import unittest
 from Common import Get
 from Core.HTMLTestRunner import HTMLTestRunner
 from Plugins import Mail, Jenkins
-from TestCase.App import AppNative
 from TestCase.Web import UserCenter
 
 # job_name = 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080'
@@ -33,8 +32,7 @@ print('Get jenkins info successfully...')
 # test_suite = unittest.TestSuite()
 # test_suite.addTests([UserCenter('saveUserInfo')])
 user_center = unittest.TestLoader().loadTestsFromTestCase(UserCenter)
-app_native = unittest.TestLoader().loadTestsFromTestCase(AppNative)
-total_test = unittest.TestSuite([user_center, app_native])
+total_test = unittest.TestSuite([user_center])
 
 timeStampArr = time.localtime(time.time())
 folder = Get.base_dir() + '/Html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
