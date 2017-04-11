@@ -11,10 +11,10 @@ class UserCenter(unittest.TestCase):
         self.db = DB()
 
     def test_saveUserInfo(self):
-        self.run_test(20, 'loginName')
+        self.run_test(20, True)
 
     def test_checkPhone(self):
-        self.run_test(21, 'phone')
+        self.run_test(21, True)
 
     def test_checkLogin(self):
         self.run_test(22)
@@ -38,7 +38,7 @@ class UserCenter(unittest.TestCase):
         self.run_test(28)
 
     def test_updatePhone(self):
-        self.run_test(29, 'phone')
+        self.run_test(29, True)
 
     def test_updateHeadPic(self):
         self.run_test(30)
@@ -59,16 +59,16 @@ class UserCenter(unittest.TestCase):
         self.run_test(35)
 
     def test_setPhone(self):
-        self.run_test(36, 'phone')
+        self.run_test(36, True)
 
     def test_setEmail(self):
-        self.run_test(37, 'email')
+        self.run_test(37, True)
 
     def test_queryCancelUserList(self):
-        self.run_test(38, 'email')
+        self.run_test(38, True)
 
     def test_queryEmailOrPhoneExist(self):
-        self.run_test(39)
+        self.run_test(39, True)
 
     def test_countRealAuthNum(self):
         self.run_test(40)
@@ -76,18 +76,27 @@ class UserCenter(unittest.TestCase):
     def test_countRegisterNum(self):
         self.run_test(41)
 
-    def run_test(self, case_id, random_type=''):
+    def run_test(self, case_id, random=False):
         item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
+        if random is True:
+            if 'email' in post_data:
+                post_data['email'] = Get.random_value(11) + '@ehomepay.com.cn'
+            if 'phone' in post_data:
+                post_data['phone'] = Get.random_value(11)
+            if 'loginName' in post_data:
+                post_data['loginName'] = Get.random_value(11)
+            if 'bindInfo' in post_data:
+                post_data['bindInfo'] = Get.random_value(11)
 
-        if random_type == '':
-            pass
-        elif random_type == 'email':
-            post_data['email'] = Get.random_value(11) + '@ehomepay.com.cn'
-        elif random_type == 'phone':
-            post_data['phone'] = Get.random_value(11)
-        elif random_type == 'loginName':
-            post_data['loginName'] = Get.random_value(11)
+        # if random_type == '':
+        #     pass
+        # elif random_type == 'email':
+        #     post_data['email'] = Get.random_value(11) + '@ehomepay.com.cn'
+        # elif random_type == 'phone':
+        #     post_data['phone'] = Get.random_value(11)
+        # elif random_type == 'loginName':
+        #     post_data['loginName'] = Get.random_value(11)
 
         record, result = Get.test_steps(self.host, self.header, item, post_data)
         self.db.insert(record, 'result')
