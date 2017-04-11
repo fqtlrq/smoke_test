@@ -34,6 +34,9 @@ class UserCenter(unittest.TestCase):
     def test_queryUserInfoByLogin(self):
         self.run_test(27)
 
+    def test_queryUserInfoByName(self):
+        self.run_test(49)
+
     def test_editUserInfo(self):
         self.run_test(28)
 
@@ -76,7 +79,56 @@ class UserCenter(unittest.TestCase):
     def test_countRegisterNum(self):
         self.run_test(41)
 
-    def run_test(self, case_id, random=False):
+    def test_saveRealAuthInfoFirst(self):
+        self.run_test(42)
+
+    def test_saveRealAuthInfoSecond(self):
+        self.run_test(43)
+
+    def test_queryCertsApprovalList(self):
+        self.run_test(44)
+
+    def test_queryAuthApprovalList(self):
+        self.run_test(45)
+
+    def test_approveAuthAndUpdateCertInfo(self):
+        '''
+        1.查询证件审核下的待审核approveId
+        2.进行驳回操作
+        3.更新证件信息使其重新变为待审核状态
+        :return: 
+        '''
+        item = self.db.query_one("select * from api where id=44")
+        post_data = eval(item['params'])
+        record, result = Get.test_steps(self.host, self.header, item, post_data)
+        approve_id = result['data']['data'][0]['approvalId']
+        self.run_test(46, others={'approveId': approve_id})
+        self.run_test(47)
+
+    def test_approveAuthAndUpdateOverdueCerts(self):
+        '''
+        1.查询证件审核下的待审核approveId
+        2.进行驳回操作
+        3.更新证件信息使其重新变为待审核状态
+        :return: 
+        '''
+        item = self.db.query_one("select * from api where id=44")
+        post_data = eval(item['params'])
+        record, result = Get.test_steps(self.host, self.header, item, post_data)
+        approve_id = result['data']['data'][0]['approvalId']
+        self.run_test(46, others={'approveId': approve_id})
+        self.run_test(48)
+
+    def test_setsecQuestions(self):
+        self.run_test(50)
+
+    def test_checkQuestions(self):
+        self.run_test(51)
+
+    def test_queryAuthApprovalDetail(self):
+        self.run_test(52)
+
+    def run_test(self, case_id, random=False, **others):
         item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
         if random is True:
@@ -88,16 +140,9 @@ class UserCenter(unittest.TestCase):
                 post_data['loginName'] = Get.random_value(11)
             if 'bindInfo' in post_data:
                 post_data['bindInfo'] = Get.random_value(11)
-
-        # if random_type == '':
-        #     pass
-        # elif random_type == 'email':
-        #     post_data['email'] = Get.random_value(11) + '@ehomepay.com.cn'
-        # elif random_type == 'phone':
-        #     post_data['phone'] = Get.random_value(11)
-        # elif random_type == 'loginName':
-        #     post_data['loginName'] = Get.random_value(11)
-
+        if 'others' in others:
+            if 'approveId' in others['others']:
+                post_data['approvalId'] = others['others']['approveId']
         record, result = Get.test_steps(self.host, self.header, item, post_data)
         self.db.insert(record, 'result')
         self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
