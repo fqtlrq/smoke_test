@@ -105,20 +105,6 @@ class UserCenter(unittest.TestCase):
         self.run_test(46, others={'approveId': approve_id})
         self.run_test(47)
 
-    def test_approveAuthAndUpdateOverdueCerts(self):
-        '''
-        1.查询证件审核下的待审核approveId
-        2.进行驳回操作
-        3.更新证件信息使其重新变为待审核状态
-        :return: 
-        '''
-        item = self.db.query_one("select * from api where id=44")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        approve_id = result['data']['data'][0]['approvalId']
-        self.run_test(46, others={'approveId': approve_id})
-        self.run_test(48)
-
     def test_setsecQuestions(self):
         self.run_test(50)
 
