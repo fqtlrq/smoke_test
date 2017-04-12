@@ -91,19 +91,19 @@ class UserCenter(unittest.TestCase):
     def test_queryAuthApprovalList(self):
         self.run_test(45)
 
-    def test_approveAuthAndUpdateCertInfo(self):
-        '''
-        1.查询证件审核下的待审核approveId
-        2.进行驳回操作
-        3.更新证件信息使其重新变为待审核状态
-        :return: 
-        '''
-        item = self.db.query_one("select * from api where id=44")
-        post_data = eval(item['params'])
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        approve_id = result['data']['data'][0]['approvalId']
-        self.run_test(46, others={'approveId': approve_id})
-        self.run_test(47)
+    # def test_approveAuthAndUpdateCertInfo(self):
+    #     '''
+    #     1.查询证件审核下的待审核approveId
+    #     2.进行驳回操作
+    #     3.更新证件信息使其重新变为待审核状态
+    #     :return:
+    #     '''
+    #     item = self.db.query_one("select * from api where id=44")
+    #     post_data = eval(item['params'])
+    #     record, result = Get.test_steps(self.host, self.header, item, post_data)
+    #     approve_id = result['data']['data'][0]['approvalId']
+    #     self.run_test(46, others={'approveId': approve_id})
+    #     self.run_test(47)
 
     def test_setsecQuestions(self):
         self.run_test(50)
@@ -114,7 +114,7 @@ class UserCenter(unittest.TestCase):
     def test_queryAuthApprovalDetail(self):
         self.run_test(52)
 
-    def run_test(self, case_id, random=False, **others):
+    def run_test(self, case_id, random=False):
         item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
         if random is True:
@@ -126,9 +126,9 @@ class UserCenter(unittest.TestCase):
                 post_data['loginName'] = Get.random_value(11)
             if 'bindInfo' in post_data:
                 post_data['bindInfo'] = Get.random_value(11)
-        if 'others' in others:
-            if 'approveId' in others['others']:
-                post_data['approvalId'] = others['others']['approveId']
+        # if 'others' in others:
+            # if 'approveId' in others['others']:
+            #     post_data['approvalId'] = others['others']['approveId']
         record, result = Get.test_steps(self.host, self.header, item, post_data)
         self.db.insert(record, 'result')
         self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
@@ -139,3 +139,13 @@ class PosCashier(unittest.TestCase):
         self.host = 'http://10.12.9.12:8083'
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
+
+    def run_test(self, case_id, random=False):
+        item = self.db.query_one("select * from api where id=" + str(case_id))
+        post_data = eval(item['params'])
+        if random is True:
+            pass
+
+        record, result = Get.test_steps(self.host, self.header, item, post_data)
+        self.db.insert(record, 'result')
+        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])

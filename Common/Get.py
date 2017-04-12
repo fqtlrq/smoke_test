@@ -56,6 +56,9 @@ def test_steps(host, header, api_info, post_data):
     if api_info['api_type'] == 'web1':
         prefix = 'json='
 
+    if api_info['api_type'] == 'web3':
+        prefix = 'jsonStr='
+
     result = Http.get_json_response(url, post_data, header, prefix)
     record['project'] = api_info['project']
     record['api_path'] = api_info['api_path']
