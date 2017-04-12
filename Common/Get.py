@@ -1,5 +1,6 @@
 import random
 import os
+import hashlib
 from Core.Http import Http
 
 
@@ -51,14 +52,27 @@ def base_dir():
 def test_steps(host, header, api_info, post_data):
     record = dict()
     url = host + '/' + api_info['project'] + api_info['api_path']
-    is_raw = bool()
+    prefix = ''
     if api_info['api_type'] == 'web1':
-        is_raw = True
-    if api_info['api_type'] == 'web2':
-        is_raw = False
-    result = Http.get_json_response(url, post_data, header, is_raw)
+        prefix = 'json='
+
+    result = Http.get_json_response(url, post_data, header, prefix)
     record['project'] = api_info['project']
     record['api_path'] = api_info['api_path']
     record['api_type'] = api_info['api_type']
     record['result'] = api_info['expect'] == 'code:' + str(result['code']) and 'Pass' or 'Fail'
     return record, result
+
+
+def sign(json_data, key):
+    data_sorted = sorted(json_data.keys())
+    pre_str = ''
+    for k in data_sorted:
+        if k == 'sign' or k == 'sign_type':
+            continue
+        pre_str += k + '=' + json_data[k] + '&'
+    pre_str = pre_str.rstrip('&') + key
+
+    md = hashlib.md5()
+    md.update(pre_str.encode())
+    return md.hexdigest()

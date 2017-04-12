@@ -132,3 +132,10 @@ class UserCenter(unittest.TestCase):
         record, result = Get.test_steps(self.host, self.header, item, post_data)
         self.db.insert(record, 'result')
         self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+
+
+class PosCashier(unittest.TestCase):
+    def setUp(self):
+        self.host = 'http://10.12.9.12:8083'
+        self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
+        self.db = DB()
