@@ -126,26 +126,53 @@ class UserCenter(unittest.TestCase):
                 post_data['loginName'] = Get.random_value(11)
             if 'bindInfo' in post_data:
                 post_data['bindInfo'] = Get.random_value(11)
-        # if 'others' in others:
-            # if 'approveId' in others['others']:
-            #     post_data['approvalId'] = others['others']['approveId']
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
+                # if 'others' in others:
+                # if 'approveId' in others['others']:
+                #     post_data['approvalId'] = others['others']['approveId']
+        result = Get.test_steps(self.host, self.header, item, post_data)
         self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
 
 
 class PosCashier(unittest.TestCase):
+    partner_flow = ''
+    order_no = ''
+
     def setUp(self):
-        self.host = 'http://10.12.9.12:8083'
+        self.host = 'http://10.12.9.23:8083'
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
-    def run_test(self, case_id, random=False):
+    def test_1prePay(self):
+        res_data = self.run_test(53, random_key='partnerFlow')
+        PosCashier.partner_flow = res_data['partnerFlow']
+        PosCashier.order_no = res_data['orderNo']
+
+    def test_cancelPay(self):
+        self.run_test(54, ref_data={'partnerFlow': PosCashier.partner_flow})
+
+    def test_queryPay(self):
+        self.run_test(55, encrypt_sign=False)
+
+    def test_queryBatch(self):
+        self.run_test(56, encrypt_sign=False)
+
+    def run_test(self, case_id, random_key='', ref_data={}, encrypt_sign=True):
         item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
-        if random is True:
+        if random_key == '':
             pass
+        else:
+            post_data[random_key] = Get.random_value(20)
 
-        record, result = Get.test_steps(self.host, self.header, item, post_data)
-        self.db.insert(record, 'result')
-        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
+        if ref_data == {}:
+            pass
+        else:
+            for k, v in ref_data.items():
+                post_data[k] = v
+
+        if encrypt_sign is True:
+            post_data['sign'] = Get.sign(post_data, 'seNJ00')
+
+        result = Get.test_steps(self.host, self.header, item, post_data)
+        self.assertEqual(item['expect'], 'returnCode:' + str(result['returnCode']), item['api_path'])
+        return result
