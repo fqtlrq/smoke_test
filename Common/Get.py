@@ -1,6 +1,7 @@
 import hashlib
 import os
 import random
+from configparser import ConfigParser
 
 from Core.Http import Http
 
@@ -75,3 +76,10 @@ def sign(json_data, key):
     md = hashlib.md5()
     md.update(pre_str.encode())
     return md.hexdigest()
+
+
+def host(project, env):
+    conf = os.path.join(base_dir(), 'Conf', 'Env.ini')
+    cf = ConfigParser()
+    cf.read(conf, 'utf-8')
+    return cf.get(project, env)

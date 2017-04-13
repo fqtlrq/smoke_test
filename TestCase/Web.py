@@ -1,12 +1,11 @@
 import unittest
 
-from Common import Get
-from Core.DB import DB
+from Core.DB import *
 
 
 class UserCenter(unittest.TestCase):
     def setUp(self):
-        self.host = 'http://10.12.9.12:8083'
+        self.host = Get.host('user_center_test', 'test_url')
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
@@ -137,7 +136,7 @@ class PosCashier(unittest.TestCase):
     partner_flow = ''
 
     def setUp(self):
-        self.host = 'http://10.12.9.23:8083'
+        self.host = Get.host('pos_cashier', 'test_url')
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
