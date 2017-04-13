@@ -49,5 +49,5 @@ print('Finish to run test case...')
 print('Generate report successfully...')
 with open(file, 'r') as f:
     content = f.read()
-if Mail.send_mail('Automation Script Report', content):
+if Mail.send_mail('Automation Script Report', content, job_name):
     print('Email is sent to builder...')

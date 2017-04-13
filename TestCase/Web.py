@@ -135,7 +135,6 @@ class UserCenter(unittest.TestCase):
 
 class PosCashier(unittest.TestCase):
     partner_flow = ''
-    order_no = ''
 
     def setUp(self):
         self.host = 'http://10.12.9.23:8083'
@@ -145,7 +144,6 @@ class PosCashier(unittest.TestCase):
     def test_1prePay(self):
         res_data = self.run_test(53, random_key='partnerFlow')
         PosCashier.partner_flow = res_data['partnerFlow']
-        PosCashier.order_no = res_data['orderNo']
 
     def test_cancelPay(self):
         self.run_test(54, ref_data={'partnerFlow': PosCashier.partner_flow})

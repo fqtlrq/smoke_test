@@ -6,11 +6,11 @@ from email.mime.text import MIMEText
 from Common import Get
 
 
-def send_mail(sub, content):
+def send_mail(sub, content, job):
     mail_conf_path = os.path.join(Get.base_dir(), 'Conf', 'Email.ini')
     cf = ConfigParser()
     cf.read(mail_conf_path, 'utf-8')
-    mail_to = cf.items('send')
+    mail_to = cf.items(job)
     mail_to_list = []
     for k, v in mail_to:
         mail_to_list.append(v)
