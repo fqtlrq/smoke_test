@@ -17,8 +17,8 @@ def send_mail(sub, content, job):
     mail_host = cf.get('base', 'host')
     mail_user = cf.get('base', 'user')
     mail_pass = cf.get('base', 'pass')
-    mail_postfix = cf.get('base', 'postfix')
-    me = "<" + mail_user + "@" + mail_postfix + ">"
+    # mail_postfix = cf.get('base', 'postfix')
+    me = "<" + mail_user + ">"
     msg = MIMEText(content, _subtype='html', _charset='gb2312')
     msg['Subject'] = sub
     msg['From'] = me
