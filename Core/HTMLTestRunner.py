@@ -481,6 +481,7 @@ a.popup_link:hover {
     REPORT_TEST_NO_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
+    <td class='%(style)s'><div class='testcase'>%(doc)s</div></td>
     <td colspan='5' align='center'>%(status)s</td>
 </tr>
 """  # variables: (tid, Class, style, desc, status)
@@ -712,7 +713,7 @@ class HTMLTestRunner(Template_mixin):
                 name = cls.__name__
             else:
                 name = "%s.%s" % (cls.__module__, cls.__name__)
-            doc = (cls.__doc__ or "")
+            doc = cls.__doc__ and cls.__doc__.split("\n")[0] or ""
             desc = doc and '%s: %s' % (name, doc) or name
             desc += '环境:' + cls.host
 
@@ -745,7 +746,8 @@ class HTMLTestRunner(Template_mixin):
         tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid + 1, tid + 1)
         name = t.id().split('.')[-1]
         doc = t.shortDescription() or ""
-        desc = doc and ('%s: %s' % (name, doc)) or name
+        # desc = doc and ('%s: %s' % (name, doc)) or name
+        desc = name
         tmpl = has_output and self.REPORT_TEST_WITH_OUTPUT_TMPL or self.REPORT_TEST_NO_OUTPUT_TMPL
 
         # o and e should be byte string because they are collected from stdout and stderr?
@@ -775,6 +777,7 @@ class HTMLTestRunner(Template_mixin):
             Class='none',
             style=n == 2 and 'errorCase' or (n == 1 and 'failCase' or 'none'),
             desc=desc,
+            doc=doc,
             script=script,
             status=self.STATUS[n],
         )

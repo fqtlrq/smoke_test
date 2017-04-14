@@ -4,9 +4,8 @@ from Core.DB import *
 
 
 class UserCenter(unittest.TestCase):
-    """
-    用户中心
-    """
+    """用户中心"""
+
     host = Get.host('user_center')
 
     def setUp(self):
@@ -137,9 +136,8 @@ class UserCenter(unittest.TestCase):
 
 
 class PosCashier(unittest.TestCase):
-    """
-    POS收银台
-    """
+    """POS收银台"""
+
     partner_flow = ''
     host = Get.host('pos_cashier')
 
@@ -148,16 +146,24 @@ class PosCashier(unittest.TestCase):
         self.db = DB()
 
     def test_payByOrderPos_1prePay(self):
+        """/payByOrderPos/prePay"""
+
         res_data = self.analysis(53, random_key='partnerFlow')
         PosCashier.partner_flow = res_data['partnerFlow']
 
     def test_payByOrderPos_cancelPay(self):
+        """/payByOrderPos/cancelPay"""
+
         self.analysis(54, ref_data={'partnerFlow': PosCashier.partner_flow})
 
     def test_payByOrderPos_queryPay(self):
+        """/payByOrderPos/queryPay"""
+
         self.analysis(55, encrypt_sign=False)
 
     def test_payByOrderPos_queryBatch(self):
+        """/payByOrderPos/queryBatch"""
+
         self.analysis(56, encrypt_sign=False)
 
     def analysis(self, case_id, random_key='', ref_data={}, encrypt_sign=True):
