@@ -5,7 +5,7 @@ from Core.DB import *
 
 class UserCenter(unittest.TestCase):
     def setUp(self):
-        self.host = Get.host('user_center_test', 'test_url')
+        self.host = Get.host('user_center_test', 'test')
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
@@ -136,7 +136,7 @@ class PosCashier(unittest.TestCase):
     partner_flow = ''
 
     def setUp(self):
-        self.host = Get.host('pos_cashier', 'test_url')
+        self.host = Get.host('pos_cashier', 'test')
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
