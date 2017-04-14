@@ -10,85 +10,85 @@ class UserCenter(unittest.TestCase):
         self.db = DB()
 
     def test_saveUserInfo(self):
-        self.run_test(20, True)
+        self.analysis(20, True)
 
     def test_checkPhone(self):
-        self.run_test(21, True)
+        self.analysis(21, True)
 
     def test_checkLogin(self):
-        self.run_test(22)
+        self.analysis(22)
 
     def test_queryRealAuthInfo(self):
-        self.run_test(23)
+        self.analysis(23)
 
     def test_checkCertVaild(self):
-        self.run_test(24)
+        self.analysis(24)
 
     def test_getVocationList(self):
-        self.run_test(25)
+        self.analysis(25)
 
     def test_getCK(self):
-        self.run_test(26)
+        self.analysis(26)
 
     def test_queryUserInfoByLogin(self):
-        self.run_test(27)
+        self.analysis(27)
 
     def test_queryUserInfoByName(self):
-        self.run_test(49)
+        self.analysis(49)
 
     def test_editUserInfo(self):
-        self.run_test(28)
+        self.analysis(28)
 
     def test_updatePhone(self):
-        self.run_test(29, True)
+        self.analysis(29, True)
 
     def test_updateHeadPic(self):
-        self.run_test(30)
+        self.analysis(30)
 
     def test_updateSignature(self):
-        self.run_test(31)
+        self.analysis(31)
 
     def test_updateEmail(self):
-        self.run_test(32)
+        self.analysis(32)
 
     def test_queryUserInfo(self):
-        self.run_test(33)
+        self.analysis(33)
 
     def test_getQuestions(self):
-        self.run_test(34)
+        self.analysis(34)
 
     def test_queryQuestionById(self):
-        self.run_test(35)
+        self.analysis(35)
 
     def test_setPhone(self):
-        self.run_test(36, True)
+        self.analysis(36, True)
 
     def test_setEmail(self):
-        self.run_test(37, True)
+        self.analysis(37, True)
 
     def test_queryCancelUserList(self):
-        self.run_test(38, True)
+        self.analysis(38, True)
 
     def test_queryEmailOrPhoneExist(self):
-        self.run_test(39, True)
+        self.analysis(39, True)
 
     def test_countRealAuthNum(self):
-        self.run_test(40)
+        self.analysis(40)
 
     def test_countRegisterNum(self):
-        self.run_test(41)
+        self.analysis(41)
 
     def test_saveRealAuthInfoFirst(self):
-        self.run_test(42)
+        self.analysis(42)
 
     def test_saveRealAuthInfoSecond(self):
-        self.run_test(43)
+        self.analysis(43)
 
     def test_queryCertsApprovalList(self):
-        self.run_test(44)
+        self.analysis(44)
 
     def test_queryAuthApprovalList(self):
-        self.run_test(45)
+        self.analysis(45)
 
     # def test_approveAuthAndUpdateCertInfo(self):
     #     '''
@@ -105,15 +105,15 @@ class UserCenter(unittest.TestCase):
     #     self.run_test(47)
 
     def test_setsecQuestions(self):
-        self.run_test(50)
+        self.analysis(50)
 
     def test_checkQuestions(self):
-        self.run_test(51)
+        self.analysis(51)
 
     def test_queryAuthApprovalDetail(self):
-        self.run_test(52)
+        self.analysis(52)
 
-    def run_test(self, case_id, random=False):
+    def analysis(self, case_id, random=False):
         item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
         if random is True:
@@ -128,7 +128,7 @@ class UserCenter(unittest.TestCase):
                 # if 'others' in others:
                 # if 'approveId' in others['others']:
                 #     post_data['approvalId'] = others['others']['approveId']
-        result = Get.test_steps(self.host, self.header, item, post_data)
+        result = Get.result(self.host, self.header, item, post_data)
         self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
 
 
@@ -141,19 +141,19 @@ class PosCashier(unittest.TestCase):
         self.db = DB()
 
     def test_1prePay(self):
-        res_data = self.run_test(53, random_key='partnerFlow')
+        res_data = self.analysis(53, random_key='partnerFlow')
         PosCashier.partner_flow = res_data['partnerFlow']
 
     def test_cancelPay(self):
-        self.run_test(54, ref_data={'partnerFlow': PosCashier.partner_flow})
+        self.analysis(54, ref_data={'partnerFlow': PosCashier.partner_flow})
 
     def test_queryPay(self):
-        self.run_test(55, encrypt_sign=False)
+        self.analysis(55, encrypt_sign=False)
 
     def test_queryBatch(self):
-        self.run_test(56, encrypt_sign=False)
+        self.analysis(56, encrypt_sign=False)
 
-    def run_test(self, case_id, random_key='', ref_data={}, encrypt_sign=True):
+    def analysis(self, case_id, random_key='', ref_data={}, encrypt_sign=True):
         item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
         if random_key == '':
@@ -170,6 +170,6 @@ class PosCashier(unittest.TestCase):
         if encrypt_sign is True:
             post_data['sign'] = Get.sign(post_data, 'seNJ00')
 
-        result = Get.test_steps(self.host, self.header, item, post_data)
+        result = Get.result(self.host, self.header, item, post_data)
         self.assertEqual(item['expect'], 'returnCode:' + str(result['returnCode']), item['api_path'])
         return result

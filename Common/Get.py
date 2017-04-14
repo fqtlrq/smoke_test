@@ -51,7 +51,7 @@ def base_dir():
     return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def test_steps(host, header, api_info, post_data):
+def result(host, header, api_info, post_data):
     url = host + '/' + api_info['project'] + api_info['api_path']
     prefix = ''
     if api_info['api_type'] == 'web1':
