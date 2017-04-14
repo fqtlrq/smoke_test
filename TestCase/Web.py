@@ -135,11 +135,11 @@ class UserCenter(unittest.TestCase):
         self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])
 
 
-class PosCashier(unittest.TestCase):
+class PosCashierWeb(unittest.TestCase):
     """POS收银台"""
 
     partner_flow = ''
-    host = Get.host('pos_cashier')
+    host = Get.host('pos_cashier_web')
 
     def setUp(self):
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -149,12 +149,12 @@ class PosCashier(unittest.TestCase):
         """/payByOrderPos/prePay"""
 
         res_data = self.analysis(53, random_key='partnerFlow')
-        PosCashier.partner_flow = res_data['partnerFlow']
+        PosCashierWeb.partner_flow = res_data['partnerFlow']
 
     def test_payByOrderPos_cancelPay(self):
         """/payByOrderPos/cancelPay"""
 
-        self.analysis(54, ref_data={'partnerFlow': PosCashier.partner_flow})
+        self.analysis(54, ref_data={'partnerFlow': PosCashierWeb.partner_flow})
 
     def test_payByOrderPos_queryPay(self):
         """/payByOrderPos/queryPay"""
@@ -183,7 +183,7 @@ class PosCashier(unittest.TestCase):
         if encrypt_sign is True:
             post_data['sign'] = Get.sign(post_data, 'seNJ00')
 
-        result = Get.result(PosCashier.host, self.header, item, post_data)
+        result = Get.result(PosCashierWeb.host, self.header, item, post_data)
 
         r_value = 'Pass' if item['expect'] == 'returnCode:' + str(result['returnCode']) else 'Fail'
         self.db.insert(
@@ -191,3 +191,27 @@ class PosCashier(unittest.TestCase):
             'result')
         self.assertEqual(item['expect'], 'returnCode:' + str(result['returnCode']), item['api_path'])
         return result
+
+
+class PosCashierSpBill(unittest.TestCase):
+    """对账"""
+    host = Get.host('pos_cashier_spbill')
+
+    def setUp(self):
+        self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
+        self.db = DB()
+
+    def test_runspbill(self):
+        """/allinpay/runspbill"""
+        self.analysis(57)
+
+    def analysis(self, case_id):
+        item = self.db.query_one("select * from api where id=" + str(case_id))
+        post_data = eval(item['params'])
+
+        result = Get.result(PosCashierSpBill.host, self.header, item, post_data)
+        r_value = 'Pass' if item['expect'] == 'code:' + str(result['code']) else 'Fail'
+        self.db.insert(
+            {'project': item['project'], 'api_path': item['api_path'], 'api_type': item['api_type'], 'result': r_value},
+            'result')
+        self.assertEqual(item['expect'], 'code:' + str(result['code']), item['api_path'])

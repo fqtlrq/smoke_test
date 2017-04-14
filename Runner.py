@@ -34,7 +34,7 @@ if job_name == 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080':
     total_test = unittest.TestSuite([test_suit1])
 
 if job_name == 'LFT_test_9.23_java_ehomepayCashier_poscashier_web':
-    test_suit1 = unittest.TestLoader().loadTestsFromTestCase(PosCashier)
+    test_suit1 = unittest.TestLoader().loadTestsFromTestCase(PosCashierWeb)
     total_test = unittest.TestSuite([test_suit1])
 
 timeStampArr = time.localtime(time.time())
