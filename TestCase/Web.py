@@ -7,7 +7,7 @@ class UserCenter(unittest.TestCase):
     """
     用户中心
     """
-    host = Get.host('user_center', 'test')
+    host = Get.host('user_center')
 
     def setUp(self):
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -141,7 +141,7 @@ class PosCashier(unittest.TestCase):
     POS收银台
     """
     partner_flow = ''
-    host = Get.host('pos_cashier', 'test')
+    host = Get.host('pos_cashier')
 
     def setUp(self):
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}

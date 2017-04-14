@@ -77,8 +77,9 @@ def sign(json_data, key):
     return md.hexdigest()
 
 
-def host(project, env):
+def host(project):
     conf = os.path.join(base_dir(), 'Conf', 'Env.ini')
     cf = ConfigParser()
     cf.read(conf, 'utf-8')
+    env = cf.get('machine', 'env')
     return cf.get(project, env)
