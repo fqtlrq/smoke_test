@@ -712,8 +712,9 @@ class HTMLTestRunner(Template_mixin):
                 name = cls.__name__
             else:
                 name = "%s.%s" % (cls.__module__, cls.__name__)
-            doc = (cls.__doc__ or "") + cls.host
+            doc = (cls.__doc__ or "")
             desc = doc and '%s: %s' % (name, doc) or name
+            desc += '环境:' + cls.host
 
             row = self.REPORT_CLASS_TMPL % dict(
                 style=ne > 0 and 'errorClass' or nf > 0 and 'failClass' or 'passClass',

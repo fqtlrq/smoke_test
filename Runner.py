@@ -1,4 +1,3 @@
-import os
 import sys
 import time
 
@@ -47,6 +46,7 @@ with open(file, 'w', encoding='utf-8') as f:
     HTMLTestRunner(stream=f, title='Automation Script Report', description=u'').run(total_test, jenkins_ls)
 print('Finish to run test case...')
 print('Generate report successfully...')
+
 with open(file, 'r') as f:
     content = f.read()
 if Mail.send_mail('Automation Script Report', content, job_name):

@@ -5,7 +5,7 @@ from Core.DB import *
 
 class UserCenter(unittest.TestCase):
     """
-    环境:
+    用户中心
     """
     host = Get.host('user_center', 'test')
 
@@ -138,7 +138,7 @@ class UserCenter(unittest.TestCase):
 
 class PosCashier(unittest.TestCase):
     """
-    环境:
+    POS收银台
     """
     partner_flow = ''
     host = Get.host('pos_cashier', 'test')
