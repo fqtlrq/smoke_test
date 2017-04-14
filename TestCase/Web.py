@@ -4,8 +4,12 @@ from Core.DB import *
 
 
 class UserCenter(unittest.TestCase):
+    """
+    环境:
+    """
+    host = Get.host('user_center', 'test')
+
     def setUp(self):
-        self.host = Get.host('user_center_test', 'test')
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
@@ -133,24 +137,27 @@ class UserCenter(unittest.TestCase):
 
 
 class PosCashier(unittest.TestCase):
+    """
+    环境:
+    """
     partner_flow = ''
+    host = Get.host('pos_cashier', 'test')
 
     def setUp(self):
-        self.host = Get.host('pos_cashier', 'test')
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
-    def test_1prePay(self):
+    def test_payByOrderPos_1prePay(self):
         res_data = self.analysis(53, random_key='partnerFlow')
         PosCashier.partner_flow = res_data['partnerFlow']
 
-    def test_cancelPay(self):
+    def test_payByOrderPos_cancelPay(self):
         self.analysis(54, ref_data={'partnerFlow': PosCashier.partner_flow})
 
-    def test_queryPay(self):
+    def test_payByOrderPos_queryPay(self):
         self.analysis(55, encrypt_sign=False)
 
-    def test_queryBatch(self):
+    def test_payByOrderPos_queryBatch(self):
         self.analysis(56, encrypt_sign=False)
 
     def analysis(self, case_id, random_key='', ref_data={}, encrypt_sign=True):
@@ -170,6 +177,6 @@ class PosCashier(unittest.TestCase):
         if encrypt_sign is True:
             post_data['sign'] = Get.sign(post_data, 'seNJ00')
 
-        result = Get.result(self.host, self.header, item, post_data)
+        result = Get.result(PosCashier.host, self.header, item, post_data)
         self.assertEqual(item['expect'], 'returnCode:' + str(result['returnCode']), item['api_path'])
         return result

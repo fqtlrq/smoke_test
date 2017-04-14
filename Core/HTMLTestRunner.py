@@ -695,6 +695,7 @@ class HTMLTestRunner(Template_mixin):
     def _generate_report(self, result):
         rows = []
         sortedResult = self.sortResult(result.result)
+
         for cid, (cls, cls_results) in enumerate(sortedResult):
             # subtotal for a class
             np = nf = ne = 0
@@ -711,7 +712,7 @@ class HTMLTestRunner(Template_mixin):
                 name = cls.__name__
             else:
                 name = "%s.%s" % (cls.__module__, cls.__name__)
-            doc = cls.__doc__ and cls.__doc__.split("\n")[0] or ""
+            doc = (cls.__doc__ or "") + cls.host
             desc = doc and '%s: %s' % (name, doc) or name
 
             row = self.REPORT_CLASS_TMPL % dict(
