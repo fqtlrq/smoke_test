@@ -178,5 +178,10 @@ class PosCashier(unittest.TestCase):
             post_data['sign'] = Get.sign(post_data, 'seNJ00')
 
         result = Get.result(PosCashier.host, self.header, item, post_data)
+
+        r_value = 'Pass' if item['expect'] == 'returnCode:' + str(result['returnCode']) else 'Fail'
+        self.db.insert(
+            {'project': item['project'], 'api_path': item['api_path'], 'api_type': item['api_type'], 'result': r_value},
+            'result')
         self.assertEqual(item['expect'], 'returnCode:' + str(result['returnCode']), item['api_path'])
         return result

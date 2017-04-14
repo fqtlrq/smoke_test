@@ -60,8 +60,7 @@ def result(host, header, api_info, post_data):
     if api_info['api_type'] == 'web3':
         prefix = 'jsonStr='
 
-    result = Http.get_json_response(url, post_data, header, prefix)
-    return result
+    return Http.get_json_response(url, post_data, header, prefix)
 
 
 def sign(json_data, key):
