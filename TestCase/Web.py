@@ -243,6 +243,10 @@ class PosCashierSpBill(unittest.TestCase):
         """/allinpay/addRefundFile"""
         self.analysis(63)
 
+    def test_allinpay_sysRefundTotalDetail(self):
+        """/allinpay/sysRefundTotalDetail"""
+        self.analysis(64)
+
     def analysis(self, case_id):
         item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
