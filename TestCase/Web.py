@@ -223,6 +223,26 @@ class PosCashierSpBill(unittest.TestCase):
         """/allinpay/runspbill"""
         self.analysis(57)
 
+    def test_allinpay_spbillresult(self):
+        """/allinpay/spbillresult"""
+        self.analysis(59)
+
+    def test_allinpay_spbilldetail(self):
+        """/allinpay/spbilldetail"""
+        self.analysis(60)
+
+    # def test_allinpay_updateSpbillStatus(self):
+    #     """/allinpay/updateSpbillStatus"""
+    #     self.analysis(61)
+
+    def test_allinpay_sysRefundTotal(self):
+        """/allinpay/sysRefundTotal"""
+        self.analysis(62)
+
+    def test_allinpay_addRefundFile(self):
+        """/allinpay/addRefundFile"""
+        self.analysis(63)
+
     def analysis(self, case_id):
         item = self.db.query_one("select * from api where id=" + str(case_id))
         post_data = eval(item['params'])
