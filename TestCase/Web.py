@@ -174,6 +174,10 @@ class PosCashierWeb(unittest.TestCase):
         post_url = '%s/%s%s' % (PosCashierWeb.host, item['project'], item['api_path'])
         post_data = item['params']
         res = requests.post(post_url, data=post_data, headers=self.header).content.decode()
+        r_value = 'Pass' if item['expect'] in res else 'Fail'
+        self.db.insert(
+            {'project': item['project'], 'api_path': item['api_path'], 'api_type': item['api_type'], 'result': r_value},
+            'result')
         self.assertIn(item['expect'], res)
 
     def analysis(self, case_id, random_key='', ref_data={}, encrypt_sign=True):

@@ -60,6 +60,9 @@ def result(host, header, api_info, post_data):
     if api_info['api_type'] == 'web3':
         prefix = 'jsonStr='
 
+    if api_info['api_type'] == 'web4':
+        prefix = 'xml'
+
     return Http.get_json_response(url, post_data, header, prefix)
 
 
