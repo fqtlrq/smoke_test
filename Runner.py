@@ -1,9 +1,11 @@
+import os
 import sys
 import time
+import unittest
 
+from Common import Mappings, Get
 from Core.HTMLTestRunner import HTMLTestRunner
 from Plugins import Mail, Jenkins
-from TestCase.Web import *
 
 job_name = sys.argv[1]
 job_name_list = []
@@ -25,17 +27,8 @@ jenkins_ls = [('Job Name', job_name),
               ('Build Finish Time', z)]
 print('Get jenkins info successfully...')
 
-# test_suite = unittest.TestSuite()
-# test_suite.addTests([UserCenter('saveUserInfo')])
-
-total_test = ''
-if job_name == 'LFT_test_9.27_java_ehome_app-native-http_liuyu8080':
-    test_suit1 = unittest.TestLoader().loadTestsFromTestCase(UserCenter)
-    total_test = unittest.TestSuite([test_suit1])
-
-if job_name == 'LFT_test_9.23_java_ehomepayCashier_poscashier_web':
-    test_suit1 = unittest.TestLoader().loadTestsFromTestCase(PosCashierWeb)
-    total_test = unittest.TestSuite([test_suit1])
+test_suit = unittest.TestLoader().loadTestsFromTestCase(Mappings.test_suite[job_name])
+total_test = unittest.TestSuite([test_suit])
 
 timeStampArr = time.localtime(time.time())
 folder = Get.base_dir() + '/Html/' + time.strftime('%Y-%m-%d', timeStampArr) + '/'
