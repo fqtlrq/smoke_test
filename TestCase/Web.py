@@ -178,7 +178,7 @@ class PosCashierWeb(unittest.TestCase):
         self.db.insert(
             {'project': item['project'], 'api_path': item['api_path'], 'api_type': item['api_type'], 'result': r_value},
             'result')
-        self.assertIn(item['expect'], res)
+        self.assertIn(item['expect'], res, item['api_path'])
 
     def analysis(self, case_id, random_key='', ref_data={}, encrypt_sign=True):
         item = self.db.query_one("select * from api where id=" + str(case_id))
