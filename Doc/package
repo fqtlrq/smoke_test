@@ -1,3 +1,4 @@
 python-jenkins
 pymysql
 configparser
+requests

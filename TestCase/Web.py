@@ -1,5 +1,7 @@
 import unittest
 
+import requests
+
 from Core.DB import *
 
 
@@ -166,9 +168,21 @@ class PosCashierWeb(unittest.TestCase):
 
         self.analysis(56, encrypt_sign=False)
 
+    def test_allinpay_orderQueryInfo(self):
+        """/allinpay/orderQueryInfo"""
+        item = self.db.query_one("select * from api where id=58")
+        post_url = '%s/%s%s' % (PosCashierWeb.host, item['project'], item['api_path'])
+        post_data = item['params']
+        res = requests.post(post_url, data=post_data, headers=self.header).content.decode()
+        self.assertIn(item['expect'], res)
+
     def analysis(self, case_id, random_key='', ref_data={}, encrypt_sign=True):
         item = self.db.query_one("select * from api where id=" + str(case_id))
-        post_data = eval(item['params'])
+        if item['api_type'] != 'web4':
+            post_data = eval(item['params'])
+        else:
+            post_data = item['params']
+
         if random_key == '':
             pass
         else:

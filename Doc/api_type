@@ -1,0 +1,5 @@
+app     x-www-form-urlencoded
+web1    raw     json=
+web2    x-www-form-urlencoded
+web3    raw     jsonStr=
+web4    raw     string
