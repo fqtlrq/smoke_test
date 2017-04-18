@@ -36,7 +36,7 @@ os.makedirs(folder, exist_ok=True)
 file = folder + time.strftime('%H-%M-%S') + '.html'
 
 with open(file, 'w', encoding='utf-8') as f:
-    HTMLTestRunner(stream=f, title='Automation Script Report', description=u'').run(total_test, jenkins_ls)
+    HTMLTestRunner(stream=f, title='BVT Test Report', description=u'').run(total_test, jenkins_ls)
 print('Finish to run test case...')
 print('Generate report successfully...')
 

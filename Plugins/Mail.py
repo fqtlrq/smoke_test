@@ -23,6 +23,7 @@ def send_mail(sub, content, job):
     msg['Subject'] = sub
     msg['From'] = me
     msg['To'] = ";".join(mail_to_list)
+    msg['CC'] = 'songjy@ehomepay.com.cn'
     try:
         s = smtplib.SMTP()
         s.connect(mail_host)
