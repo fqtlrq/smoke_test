@@ -9,6 +9,5 @@ Plugins/__pycache__/
 
 TestCase/__pycache__/
 
-insertDB\.py
-
-test\.py
+/test.py
+/insertDB.py
