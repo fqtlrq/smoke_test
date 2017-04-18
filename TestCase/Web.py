@@ -14,85 +14,112 @@ class UserCenter(unittest.TestCase):
         self.header = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.db = DB()
 
-    def test_saveUserInfo(self):
+    def test_passport_saveUserInfo(self):
+        """/passport/saveUserInfo"""
         self.analysis(20, True)
 
-    def test_checkPhone(self):
+    def test_passport_checkPhone(self):
+        """/passport/checkPhone"""
         self.analysis(21, True)
 
-    def test_checkLogin(self):
+    def test_passport_checkLogin(self):
+        """/passport/checkLogin"""
         self.analysis(22)
 
-    def test_queryRealAuthInfo(self):
+    def test_realAuth_queryRealAuthInfo(self):
+        """/realAuth/queryRealAuthInfo"""
         self.analysis(23)
 
-    def test_checkCertVaild(self):
+    def test_realAuth_checkCertVaild(self):
+        """/realAuth/checkCertVaild"""
         self.analysis(24)
 
-    def test_getVocationList(self):
+    def test_commons_getVocationList(self):
+        """/commons/getVocationList"""
         self.analysis(25)
 
-    def test_getCK(self):
+    def test_commons_getCK(self):
+        """/commons/getCK"""
         self.analysis(26)
 
-    def test_queryUserInfoByLogin(self):
+    def test_passport_queryUserInfoByLogin(self):
+        """/passport/queryUserInfoByLogin"""
         self.analysis(27)
 
-    def test_queryUserInfoByName(self):
+    def test_userSet_queryUserInfoByName(self):
+        """/userSet/queryUserInfoByName"""
         self.analysis(49)
 
-    def test_editUserInfo(self):
+    def test_userSet_editUserInfo(self):
+        """/userSet/editUserInfo"""
         self.analysis(28)
 
-    def test_updatePhone(self):
+    def test_userSet_updatePhone(self):
+        """/userSet/updatePhone"""
         self.analysis(29, True)
 
-    def test_updateHeadPic(self):
+    def test_userSet_updateHeadPic(self):
+        """/userSet/updateHeadPic"""
         self.analysis(30)
 
-    def test_updateSignature(self):
+    def test_userSet_updateSignature(self):
+        """/userSet/updateSignature"""
         self.analysis(31)
 
-    def test_updateEmail(self):
+    def test_userSet_updateEmail(self):
+        """/userSet/updateEmail"""
         self.analysis(32)
 
-    def test_queryUserInfo(self):
+    def test_userSet_queryUserInfo(self):
+        """/userSet/queryUserInfo"""
         self.analysis(33)
 
-    def test_getQuestions(self):
+    def test_userSet_getQuestions(self):
+        """/userSet/getQuestions"""
         self.analysis(34)
 
-    def test_queryQuestionById(self):
+    def test_userSet_queryQuestionById(self):
+        """/userSet/queryQuestionById"""
         self.analysis(35)
 
-    def test_setPhone(self):
+    def test_userSet_setPhone(self):
+        """/userSet/setPhone"""
         self.analysis(36, True)
 
-    def test_setEmail(self):
+    def test_userSet_setEmail(self):
+        """/userSet/setEmail"""
         self.analysis(37, True)
 
-    def test_queryCancelUserList(self):
+    def test_approval_queryCancelUserList(self):
+        """/approval/queryCancelUserList"""
         self.analysis(38, True)
 
-    def test_queryEmailOrPhoneExist(self):
+    def test_userSet_queryEmailOrPhoneExist(self):
+        """/userSet/queryEmailOrPhoneExist"""
         self.analysis(39, True)
 
-    def test_countRealAuthNum(self):
+    def test_countUserInfo_countRealAuthNum(self):
+        """/countUserInfo/countRealAuthNum"""
         self.analysis(40)
 
-    def test_countRegisterNum(self):
+    def test_countUserInfo_countRegisterNum(self):
+        """/countUserInfo/countRegisterNum"""
         self.analysis(41)
 
-    def test_saveRealAuthInfoFirst(self):
+    def test_realAuth_saveRealAuthInfoFirst(self):
+        """/realAuth/saveRealAuthInfoFirst"""
         self.analysis(42)
 
-    def test_saveRealAuthInfoSecond(self):
+    def test_realAuth_saveRealAuthInfoSecond(self):
+        """/realAuth/saveRealAuthInfoSecond"""
         self.analysis(43)
 
-    def test_queryCertsApprovalList(self):
+    def test_approval_queryCertsApprovalList(self):
+        """/approval/queryCertsApprovalList"""
         self.analysis(44)
 
-    def test_queryAuthApprovalList(self):
+    def test_approval_queryAuthApprovalList(self):
+        """/approval/queryAuthApprovalList"""
         self.analysis(45)
 
     # def test_approveAuthAndUpdateCertInfo(self):
@@ -109,13 +136,16 @@ class UserCenter(unittest.TestCase):
     #     self.run_test(46, others={'approveId': approve_id})
     #     self.run_test(47)
 
-    def test_setsecQuestions(self):
+    def test_userSet_setsecQuestions(self):
+        """/userSet/setsecQuestions"""
         self.analysis(50)
 
-    def test_checkQuestions(self):
+    def test_userSet_checkQuestions(self):
+        """/userSet/checkQuestions"""
         self.analysis(51)
 
-    def test_queryAuthApprovalDetail(self):
+    def test_approval_queryAuthApprovalDetail(self):
+        """/approval/queryAuthApprovalDetail"""
         self.analysis(52)
 
     def analysis(self, case_id, random=False):

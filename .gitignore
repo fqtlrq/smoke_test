@@ -1,2 +1,14 @@
 \.idea/
 Html/
+
+Common/__pycache__/
+
+Core/__pycache__/
+
+Plugins/__pycache__/
+
+TestCase/__pycache__/
+
+insertDB\.py
+
+test\.py
