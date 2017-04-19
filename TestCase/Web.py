@@ -204,11 +204,19 @@ class PosCashierWeb(unittest.TestCase):
         post_url = '%s/%s%s' % (PosCashierWeb.host, item['project'], item['api_path'])
         post_data = item['params']
         res = requests.post(post_url, data=post_data, headers=self.header).content.decode()
-        r_value = 'Pass' if item['expect'] in res else 'Fail'
+        r1 = item['expect'].split(';')[0]
+        r2 = item['expect'].split(';')[1]
+        r_value = 'Pass' if r1 in res or r2 in res else 'Fail'
         self.db.insert(
             {'project': item['project'], 'api_path': item['api_path'], 'api_type': item['api_type'], 'result': r_value},
             'result')
-        self.assertIn(item['expect'], res, item['api_path'])
+
+        expect = ''
+        if r1 in res:
+            expect = r1
+        if r2 in res:
+            expect = r2
+        self.assertIn(expect, res, item['api_path'])
 
     def analysis(self, case_id, random_key='', ref_data={}, encrypt_sign=True):
         item = self.db.query_one("select * from api where id=" + str(case_id))
