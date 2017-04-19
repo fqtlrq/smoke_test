@@ -211,7 +211,7 @@ class PosCashierWeb(unittest.TestCase):
             {'project': item['project'], 'api_path': item['api_path'], 'api_type': item['api_type'], 'result': r_value},
             'result')
 
-        expect = ''
+        expect = '!!!@@@'
         if r1 in res:
             expect = r1
         if r2 in res:
